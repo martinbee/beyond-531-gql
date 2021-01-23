@@ -36,6 +36,8 @@ export default gql`
 
   # one day add accessories
   type Workout {
+    # whether or not this workout is ongoing
+    active: Boolean!
     # workout id
     id: ID!
     # core lifts this workout (generated using user's one rep maxes and current week)

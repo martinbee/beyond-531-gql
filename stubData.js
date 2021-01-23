@@ -1,5 +1,6 @@
 const userWorkoutsHistory = [
   {
+    active: false,
     id: '1',
     coreSets: [
       {
@@ -30,6 +31,7 @@ const userWorkoutsHistory = [
     liftType: 'bench',
   },
   {
+    active: false,
     id: '2',
     coreSets: [
       {
