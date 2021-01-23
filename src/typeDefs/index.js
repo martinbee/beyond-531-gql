@@ -1,59 +1,148 @@
 import { gql } from 'apollo-server';
 
 export default gql`
+  # Query Types
+
+  "A User's one rep maxes"
   type OneRepMaxes {
-    # bench press one rep max
+    "Bench press one rep max"
     bench: Int!
-    # overhead press one rep max
+
+    "Overhead press one rep max"
     press: Int!
-    # deadlift one rep max
+
+    "Deadlift one rep max"
     deadlift: Int!
-    # squat one rep max
+
+    "Squat one rep max"
     squat: Int!
   }
 
+  "A user"
   type User {
-    # user first name
+    "User first name"
     firstName: String!
-    # user workout history
+
+    "User workout history"
     history: [Workout!]
-    # user id
+
+    "User id"
     id: ID!
-    # user last name
+
+    "User last name"
     lastName: String!
-    # user's one rep maxes
+
+    "User's one rep maxes"
     oneRepMaxes: OneRepMaxes!
-    # what week of beyond 5/3/1 the user is on
+
+    "What week of beyond 5/3/1 the user is on"
     week: Int!
   }
 
+  "A single lift - used in Workout"
   type Lift {
-    # number of reps lifted
+    "Number of reps lifted"
     reps: Int!
-    # weight lifted
+
+    "Weight lifted"
     weight: Int!
   }
 
   # one day add accessories
+  "A Workout"
   type Workout {
-    # whether or not this workout is ongoing
+    "Whether or not this workout is ongoing"
     active: Boolean!
-    # workout id
+
+    "Workout id"
     id: ID!
-    # core lifts this workout (generated using user's one rep maxes and current week)
+
+    "Core lifts this workout (generated using user's one rep maxes and current week)"
     coreSets: [Lift!]!
-    # did the user do their first set last
+
+    "Did the user do their first set last"
     didFirstSetLast: Boolean!
-    # did the warm up
+
+    "Did the warm up"
     didWarmUp: Boolean!
-    # heavy lifts added in after the core sets
+
+    "Heavy lifts added in after the core sets"
     jokerSets: [Lift!]
-    # what lift are we doing (bench, press, etc.). Look into enums for this
+
+    "What lift are we doing (bench, press, etc.). Look into enums for this"
     liftType: String!
   }
 
   type Query {
     users: [User!]
     user(id: ID): User
+  }
+
+  # Mutation Types
+
+  interface MutationResponse {
+    "Status code"
+    code: String!
+
+    "Ui displayable message"
+    message: String!
+
+    "Whether or not the mutation succeeded"
+    success: Boolean!
+  }
+
+  "A User's one rep maxes"
+  input OneRepMaxesInput {
+    "Bench press one rep max"
+    bench: Int!
+
+    "Overhead press one rep max"
+    press: Int!
+
+    "Deadlift one rep max"
+    deadlift: Int!
+
+    "Squat one rep max"
+    squat: Int!
+  }
+
+  input UpdateUserOneRepMaxesInput {
+    "The id of the user being updated"
+    id: ID!
+
+    "Updated user oneRepMaxes"
+    oneRepMaxes: OneRepMaxesInput
+  }
+
+  type UpdateUserOneRepMaxesResponse implements MutationResponse {
+    code: String!
+    message: String!
+    success: Boolean!
+    user: User
+  }
+
+  input UpdateUserWeekInput {
+    "The id of the user being updated"
+    id: ID!
+
+    "Updated user workout week"
+    week: Int!
+  }
+
+  type UpdateUserWeekResponse implements MutationResponse {
+    code: String!
+    message: String!
+    success: Boolean!
+    user: User
+  }
+
+  # Think about if we want one update user mutation or these smaller ones
+  # these are technically clearer and more secure, but a bit of a pain
+  type Mutation {
+    "Updates the user's one rep maxes"
+    updateUserOneRepMaxes(input: UpdateUserOneRepMaxesInput!): UpdateUserOneRepMaxesResponse
+
+    "Updates the user's current workout week"
+    updateUserWeek(input: UpdateUserWeekInput!): UpdateUserWeekResponse
   }
 `;
