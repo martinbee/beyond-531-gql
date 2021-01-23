@@ -7,11 +7,12 @@ GQL layer for a beyond 5/3/1 workout app
 - add mutations that will update user (one rep maxes, week)
 - add mutations that will create workout
 - add mutations that will update workout
-- add db
+- add db (postgres?)
 - use real data
 - update mutations to update db
 - add mutations that will create user
 - add auth
+- look into heroku hosting
 
 ## Flow
 
