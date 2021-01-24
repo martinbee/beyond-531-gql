@@ -19,7 +19,7 @@ export default function updateUserWeek(parent, args, context, info) {
 
   const updatedUser = {
     ...userToUpdate,
-    week: input.week,
+    week,
   }
 
   return {
