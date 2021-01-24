@@ -36,10 +36,12 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    history: {
-      type: [Schema.Types.ObjectId],
-      ref: 'Workout',
-    },
+    history: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Workout',
+      },
+    ],
     lastName: {
       type: String,
       required: true,
