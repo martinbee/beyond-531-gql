@@ -2,39 +2,10 @@
 
 GQL layer for a beyond 5/3/1 workout app
 
-## Plan
+## [Todo](./docs/todo.md)
 
-- use stub or active data for now (in memory) [x]
-- reorg files [x]
-- look into using schema files instead of .js
-- add mutations that will update user (training maxes, week) [x]
-- add mutations that will create workout [x]
-- add mutations that will update workout [x]
-- add db (postgres?)
-- use real data
-- update mutations to update db
-- add mutations that will create user
-- add auth
-- look into heroku hosting
+## [App Flow](./docs/app-flow.md)
 
-## Flow
+## [3/5/1 Rules](./docs/rules.md)
 
-### New
-
-- user signs up (auth)
-- user adds training maxes and week (update user)
-- user starts new workout (create workout)
-- user adds lifts, or marks things done (update workout)
-- user marks workout finished (update workout)
-- workout goes into user history (update user)
-- user's week gets bumped (update user)
-
-### Existing
-
-- user signs in (auth)
-- app checks for active workouts, if it finds one, continue workout option else:
-- user starts new workout (create workout)
-- user adds lifts, or marks things done (update workout)
-- user marks workout finished (update workout)
-- workout goes into user history (update user)
-- user's week gets bumped (update user)
+## [Assistance Exercises](./docs/assistance.md)
