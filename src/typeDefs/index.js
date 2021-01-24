@@ -1,25 +1,39 @@
 import { gql } from 'apollo-server';
 
+const LIFT_TYPE = {
+  BENCH: 'BENCH',
+  PRESS: 'PRESS',
+  DEADLIFT: 'DEADLIFT',
+  SQUAT: 'SQUAT',
+};
+
 export default gql`
   # Query Types
+
+  enum LiftType {
+    ${Object.keys(LIFT_TYPE)}
+  }
 
   "A User's one rep maxes"
   type OneRepMaxes {
     "Bench press one rep max"
-    bench: Int!
+    ${LIFT_TYPE.BENCH}: Float!
 
     "Overhead press one rep max"
-    press: Int!
+    ${LIFT_TYPE.PRESS}: Float!
 
     "Deadlift one rep max"
-    deadlift: Int!
+    ${LIFT_TYPE.DEADLIFT}: Float!
 
     "Squat one rep max"
-    squat: Int!
+    ${LIFT_TYPE.SQUAT}: Float!
   }
 
   "A user"
   type User {
+    "User current lift"
+    currentLiftType: LiftType!
+
     "User first name"
     firstName: String!
 
@@ -31,6 +45,9 @@ export default gql`
 
     "User last name"
     lastName: String!
+
+    "User's preferred order of lifts"
+    liftOrder: [LiftType!]!
 
     "User's one rep maxes"
     oneRepMaxes: OneRepMaxes!
@@ -45,7 +62,7 @@ export default gql`
     reps: Int!
 
     "Weight lifted"
-    weight: Int!
+    weight: Float!
   }
 
   # one day add accessories
@@ -70,7 +87,7 @@ export default gql`
     jokerSets: [Lift!]
 
     "What lift are we doing (bench, press, etc.). Look into enums for this"
-    liftType: String!
+    liftType: LiftType!
   }
 
   type Query {
@@ -89,6 +106,29 @@ export default gql`
 
     "Whether or not the mutation succeeded"
     success: Boolean!
+  }
+
+  input CreateWorkoutInput {
+    userId: ID!
+  }
+
+  type CreateWorkoutResponse implements MutationResponse {
+    code: String!
+    message: String!
+    success: Boolean!
+    workout: Workout
+  }
+
+  input UpdateUserLiftOrderInput {
+    id: ID!
+    liftOrder: [LiftType!]!
+  }
+
+  type UpdateUserLiftOrderResponse implements MutationResponse {
+    code: String!
+    message: String!
+    success: Boolean!
+    user: User
   }
 
   "A User's one rep maxes"
@@ -139,8 +179,18 @@ export default gql`
   # Think about if we want one update user mutation or these smaller ones
   # these are technically clearer and more secure, but a bit of a pain
   type Mutation {
+    "Creates a workout"
+    createWorkout(input: CreateWorkoutInput!): CreateWorkoutResponse
+
+    "Updates the user's lift order"
+    updateUserLiftOrder(
+      input: UpdateUserLiftOrderInput!
+    ): UpdateUserLiftOrderResponse
+
     "Updates the user's one rep maxes"
-    updateUserOneRepMaxes(input: UpdateUserOneRepMaxesInput!): UpdateUserOneRepMaxesResponse
+    updateUserOneRepMaxes(
+      input: UpdateUserOneRepMaxesInput!
+    ): UpdateUserOneRepMaxesResponse
 
     "Updates the user's current workout week"
     updateUserWeek(input: UpdateUserWeekInput!): UpdateUserWeekResponse

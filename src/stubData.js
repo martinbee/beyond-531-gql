@@ -6,11 +6,11 @@ const userWorkoutsHistory = [
       {
         reps: 5,
         weight: 125,
-      }, 
+      },
       {
         reps: 5,
         weight: 145,
-      }, 
+      },
       {
         reps: 7,
         weight: 165,
@@ -22,13 +22,13 @@ const userWorkoutsHistory = [
       {
         reps: 2,
         weight: 185,
-      }, 
+      },
       {
         reps: 1,
         weight: 195,
-      }, 
+      },
     ],
-    liftType: 'bench',
+    liftType: 'BENCH',
   },
   {
     active: false,
@@ -37,11 +37,11 @@ const userWorkoutsHistory = [
       {
         reps: 5,
         weight: 135,
-      }, 
+      },
       {
         reps: 3,
         weight: 165,
-      }, 
+      },
       {
         reps: 5,
         weight: 175,
@@ -53,28 +53,30 @@ const userWorkoutsHistory = [
       {
         reps: 3,
         weight: 185,
-      }, 
+      },
       {
         reps: 1,
         weight: 195,
-      }, 
+      },
     ],
-    liftType: 'deadlift',
+    liftType: 'DEADLIFT',
   },
-]
+];
 
 const user = {
+  currentLiftType: 'SQUAT',
   firstName: 'Martin',
   history: userWorkoutsHistory,
   id: '1234',
   lastName: 'Bee',
+  liftOrder: ['BENCH', 'SQUAT', 'PRESS', 'DEADLIFT'],
   oneRepMaxes: {
-    bench: 190,
-    deadlift: 195,
-    press: 100,
-    squat: 160,
+    BENCH: 190,
+    DEADLIFT: 195,
+    PRESS: 100,
+    SQUAT: 160,
   },
-  week: 1,
-}
+  week: 3,
+};
 
-export const users = [user]
+export const users = [user];

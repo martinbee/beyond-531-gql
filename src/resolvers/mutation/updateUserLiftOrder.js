@@ -1,14 +1,14 @@
 import { users } from '../../stubData.js';
 
-export default function updateUserWeek(parent, args, context, info) {
+export default function updateUserLiftOrder(parent, args, context, info) {
   const { input } = args;
-  const { id, week } = input;
+  const { id, liftOrder } = input;
   const userToUpdate = users.find((user) => user.id === id);
 
   if (!userToUpdate) {
     return {
       code: '400',
-      message: "Failed to set user's workout week.",
+      message: "Failed to set user's lift order.",
       success: false,
       user: null,
     };
@@ -16,12 +16,12 @@ export default function updateUserWeek(parent, args, context, info) {
 
   const updatedUser = {
     ...userToUpdate,
-    week,
+    liftOrder,
   };
 
   return {
     code: '200',
-    message: "Successfully set user's workout week!",
+    message: "Successfully set user's lift order!",
     success: true,
     user: updatedUser,
   };
