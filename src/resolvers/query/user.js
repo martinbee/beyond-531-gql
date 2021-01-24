@@ -1,5 +1,5 @@
-import { users } from '../../stubData.js'
+import User from '../../data/models/User.js';
 
-export default function user(parent, args, context, info) {
-  return users.find(({ id }) => args.id === id)
-} 
+export default async function user(parent, args, context, info) {
+  return User.findById(args.id).populate('history');
+}

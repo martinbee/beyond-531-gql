@@ -13,5 +13,6 @@ module.exports = {
     'import/extensions': 0,
     'prettier/prettier': 'error',
     'no-underscore-dangle': 0,
+    'no-console': 0,
   },
 };

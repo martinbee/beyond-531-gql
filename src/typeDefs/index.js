@@ -86,11 +86,16 @@ export default gql`
 
     "What lift are we doing (bench, press, etc.). Look into enums for this"
     liftType: LiftType!
+
+    "The user this workout belongs to"
+    user: User
   }
 
   type Query {
-    users: [User!]
+    users: [User]
     user(id: ID): User
+    workouts: [Workout]
+    workout(id: ID): Workout
   }
 
   # Mutation Types
