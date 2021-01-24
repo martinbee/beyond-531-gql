@@ -1,13 +1,22 @@
-import { userWorkoutsHistory } from '../../stubData.js';
+import Workout from '../../data/models/Workout.js';
 
-export default function updateWorkout(parent, args, context, info) {
-  const { input } = args;
-  const { id, updates } = input;
-  const workoutToUpdate = userWorkoutsHistory.find(
-    (workout) => workout.id === id
-  );
+export default async function updateWorkout(parent, args, context, info) {
+  try {
+    const { input } = args;
+    const { id, updates } = input;
 
-  if (!workoutToUpdate) {
+    const workout = await Workout.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    return {
+      code: '200',
+      message: 'Successfully updated workout!',
+      success: true,
+      workout,
+    };
+  } catch (err) {
+    // do something with err?
     return {
       code: '400',
       message: 'Failed to update workout.',
@@ -15,16 +24,4 @@ export default function updateWorkout(parent, args, context, info) {
       workout: null,
     };
   }
-
-  const updatedWorkout = {
-    ...workoutToUpdate,
-    ...updates,
-  };
-
-  return {
-    code: '200',
-    message: 'Successfully updated workout!',
-    success: true,
-    workout: updatedWorkout,
-  };
 }

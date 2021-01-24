@@ -9,6 +9,7 @@ const options = {
   autoIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 };
 
 export default function connectMongoose() {

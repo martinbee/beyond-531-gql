@@ -1,4 +1,5 @@
-import { users } from '../../stubData.js';
+import User from '../../data/models/User.js';
+import Workout from '../../data/models/Workout.js';
 
 const weekLiftTemplatesMap = {
   1: [
@@ -57,36 +58,51 @@ const getCoreSets = (currentLiftType, trainingMaxes, week) => {
   return lifts;
 };
 
-export default function createWorkout(parent, args, context, info) {
-  const { input } = args;
-  const { userId } = input;
-  const workoutUser = users.find((user) => user.id === userId);
+export default async function createWorkout(parent, args, context, info) {
+  try {
+    const { input } = args;
+    const { userId } = input;
+    const user = await User.findById(userId);
 
-  if (!workoutUser) {
+    if (!user) {
+      return {
+        code: '400',
+        errorMessage: 'Failed to find workout.',
+        message: 'Failed to create workout.',
+        success: false,
+        workout: null,
+      };
+    }
+
+    const { currentLiftType, trainingMaxes, week } = user;
+
+    const workoutData = {
+      active: true,
+      coreSets: getCoreSets(currentLiftType, trainingMaxes, week),
+      didFirstSetLast: false,
+      didWarmUp: false,
+      jokerSets: [],
+      liftType: currentLiftType,
+      user,
+    };
+
+    const workout = new Workout(workoutData);
+
+    await workout.save();
+
+    return {
+      code: '200',
+      message: 'Successfully created workout!',
+      success: true,
+      workout,
+    };
+  } catch (err) {
     return {
       code: '400',
+      errorMessage: err.message,
       message: 'Failed to create workout.',
       success: false,
       workout: null,
     };
   }
-
-  const { currentLiftType, trainingMaxes, week } = workoutUser;
-
-  const workout = {
-    active: true,
-    id: '1234',
-    coreSets: getCoreSets(currentLiftType, trainingMaxes, week),
-    didFirstSetLast: false,
-    didWarmUp: false,
-    jokerSets: [],
-    liftType: currentLiftType,
-  };
-
-  return {
-    code: '200',
-    message: 'Successfully created workout!',
-    success: true,
-    workout,
-  };
 }

@@ -1,14 +1,10 @@
 import createWorkout from './createWorkout.js';
-import updateUserLiftOrder from './updateUserLiftOrder.js';
-import updateUserTrainingMaxes from './updateUserTrainingMaxes.js';
-import updateUserWeek from './updateUserWeek.js';
+import updateUser from './updateUser.js';
 import updateWorkout from './updateWorkout.js';
 
 const mutationResolvers = {
   createWorkout,
-  updateUserLiftOrder,
-  updateUserTrainingMaxes,
-  updateUserWeek,
+  updateUser,
   updateWorkout,
 };
 

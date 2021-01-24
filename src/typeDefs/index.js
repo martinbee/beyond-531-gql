@@ -26,19 +26,19 @@ export default gql`
 
   "A user"
   type User {
-    "User current lift"
+    "User's current lift"
     currentLiftType: LiftType!
 
-    "User first name"
+    "User's first name"
     firstName: String!
 
-    "User workout history"
+    "User's workout history"
     history: [Workout!]
 
-    "User id"
+    "User's id"
     id: ID!
 
-    "User last name"
+    "User's last name"
     lastName: String!
 
     "User's preferred order of lifts"
@@ -104,6 +104,9 @@ export default gql`
     "Status code"
     code: String!
 
+    "Error message"
+    errorMessage: String
+
     "Ui displayable message"
     message: String!
 
@@ -117,21 +120,10 @@ export default gql`
 
   type CreateWorkoutResponse implements MutationResponse {
     code: String!
+    errorMessage: String
     message: String!
     success: Boolean!
     workout: Workout
-  }
-
-  input UpdateUserLiftOrderInput {
-    id: ID!
-    liftOrder: [LiftType!]!
-  }
-
-  type UpdateUserLiftOrderResponse implements MutationResponse {
-    code: String!
-    message: String!
-    success: Boolean!
-    user: User
   }
 
   "A User's training maxes"
@@ -149,31 +141,30 @@ export default gql`
     ${LIFT_TYPE.SQUAT}: Float!
   }
 
-  input UpdateUserTrainingMaxesInput {
-    "The id of the user being updated"
-    id: ID!
+  "Possible fields that can be updated on user"
+  input UpdateUserUpdates {
+    "User's current lift"
+    currentLiftType: LiftType
 
-    "Updated user TrainingMaxes"
+    "User's preferred order of lifts"
+    liftOrder: [LiftType!]
+
+    "User's training maxes"
     trainingMaxes: TrainingMaxesInput
+
+    "What week of beyond 5/3/1 the user is on"
+    week: Int
   }
 
-  type UpdateUserTrainingMaxesResponse implements MutationResponse {
-    code: String!
-    message: String!
-    success: Boolean!
-    user: User
-  }
-
-  input UpdateUserWeekInput {
-    "The id of the user being updated"
+  input UpdateUserInput {
     id: ID!
 
-    "Updated user workout week"
-    week: Int!
+    updates: UpdateUserUpdates
   }
 
-  type UpdateUserWeekResponse implements MutationResponse {
+  type UpdateUserResponse implements MutationResponse {
     code: String!
+    errorMessage: String
     message: String!
     success: Boolean!
     user: User
@@ -219,29 +210,18 @@ export default gql`
 
   type UpdateWorkoutResponse implements MutationResponse {
     code: String!
+    errorMessage: String
     message: String!
     success: Boolean!
     workout: Workout
   }
 
-  # Think about if we want one update user mutation or these smaller ones
-  # these are technically clearer and more secure, but a bit of a pain
   type Mutation {
     "Creates a workout"
     createWorkout(input: CreateWorkoutInput!): CreateWorkoutResponse
 
-    "Updates the user's lift order"
-    updateUserLiftOrder(
-      input: UpdateUserLiftOrderInput!
-    ): UpdateUserLiftOrderResponse
-
-    "Updates the user's training maxes"
-    updateUserTrainingMaxes(
-      input: UpdateUserTrainingMaxesInput!
-    ): UpdateUserTrainingMaxesResponse
-
-    "Updates the user's current workout week"
-    updateUserWeek(input: UpdateUserWeekInput!): UpdateUserWeekResponse
+    "Updates a user"
+    updateUser(input: UpdateUserInput!): UpdateUserResponse
 
     "Updates a workout"
     updateWorkout(input: UpdateWorkoutInput!): UpdateWorkoutResponse
