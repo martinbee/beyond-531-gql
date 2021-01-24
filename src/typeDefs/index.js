@@ -134,16 +134,16 @@ export default gql`
   "A User's one rep maxes"
   input OneRepMaxesInput {
     "Bench press one rep max"
-    bench: Int!
+    ${LIFT_TYPE.BENCH}: Float!
 
     "Overhead press one rep max"
-    press: Int!
+    ${LIFT_TYPE.PRESS}: Float!
 
     "Deadlift one rep max"
-    deadlift: Int!
+    ${LIFT_TYPE.DEADLIFT}: Float!
 
     "Squat one rep max"
-    squat: Int!
+    ${LIFT_TYPE.SQUAT}: Float!
   }
 
   input UpdateUserOneRepMaxesInput {
