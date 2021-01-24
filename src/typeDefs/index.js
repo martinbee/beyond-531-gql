@@ -1,11 +1,6 @@
 import { gql } from 'apollo-server';
 
-const LIFT_TYPE = {
-  BENCH: 'BENCH',
-  PRESS: 'PRESS',
-  DEADLIFT: 'DEADLIFT',
-  SQUAT: 'SQUAT',
-};
+import { LIFT_TYPE } from '../enums.js';
 
 export default gql`
   # Query Types
@@ -15,7 +10,7 @@ export default gql`
   }
 
   "A User's training max"
-  type TrainingMax {
+  type TrainingMaxes {
     "Bench press training max"
     ${LIFT_TYPE.BENCH}: Float!
 
@@ -50,7 +45,7 @@ export default gql`
     liftOrder: [LiftType!]!
 
     "User's trianing maxes"
-    trainingMax: TrainingMax!
+    trainingMaxes: TrainingMaxes!
 
     "What week of beyond 5/3/1 the user is on"
     week: Int!
@@ -135,7 +130,7 @@ export default gql`
   }
 
   "A User's training maxes"
-  input TrainingMaxInput {
+  input TrainingMaxesInput {
     "Bench press training max"
     ${LIFT_TYPE.BENCH}: Float!
 
