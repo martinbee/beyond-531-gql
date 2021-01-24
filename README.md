@@ -7,7 +7,7 @@ GQL layer for a beyond 5/3/1 workout app
 - use stub or active data for now (in memory) [x]
 - reorg files [x]
 - look into using schema files instead of .js
-- add mutations that will update user (one rep maxes, week) [x]
+- add mutations that will update user (training maxes, week) [x]
 - add mutations that will create workout [x]
 - add mutations that will update workout [x]
 - add db (postgres?)
@@ -22,7 +22,7 @@ GQL layer for a beyond 5/3/1 workout app
 ### New
 
 - user signs up (auth)
-- user adds one rep maxes and week (update user)
+- user adds training maxes and week (update user)
 - user starts new workout (create workout)
 - user adds lifts, or marks things done (update workout)
 - user marks workout finished (update workout)

@@ -80,7 +80,7 @@ const user = {
   id: '1234',
   lastName: 'Bee',
   liftOrder: ['BENCH', 'SQUAT', 'PRESS', 'DEADLIFT'],
-  oneRepMaxes: {
+  trainingMaxes: {
     BENCH: 190,
     DEADLIFT: 195,
     PRESS: 100,

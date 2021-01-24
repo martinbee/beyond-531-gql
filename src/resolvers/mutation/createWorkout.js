@@ -45,13 +45,13 @@ const weekLiftTemplatesMap = {
   ],
 };
 
-const getCoreSets = (currentLiftType, oneRepMaxes, week) => {
+const getCoreSets = (currentLiftType, trainingMaxes, week) => {
   const liftTemplates = weekLiftTemplatesMap[week];
 
   const lifts = liftTemplates.map(({ percentage, reps }) => ({
     completed: false,
     reps,
-    weight: percentage * oneRepMaxes[currentLiftType],
+    weight: percentage * trainingMaxes[currentLiftType],
   }));
 
   return lifts;
@@ -71,12 +71,12 @@ export default function createWorkout(parent, args, context, info) {
     };
   }
 
-  const { currentLiftType, oneRepMaxes, week } = workoutUser;
+  const { currentLiftType, trainingMaxes, week } = workoutUser;
 
   const workout = {
     active: true,
     id: '1234',
-    coreSets: getCoreSets(currentLiftType, oneRepMaxes, week),
+    coreSets: getCoreSets(currentLiftType, trainingMaxes, week),
     didFirstSetLast: false,
     didWarmUp: false,
     jokerSets: [],

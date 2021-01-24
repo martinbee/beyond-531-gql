@@ -14,18 +14,18 @@ export default gql`
     ${Object.keys(LIFT_TYPE)}
   }
 
-  "A User's one rep maxes"
-  type OneRepMaxes {
-    "Bench press one rep max"
+  "A User's training max"
+  type TrainingMax {
+    "Bench press training max"
     ${LIFT_TYPE.BENCH}: Float!
 
-    "Overhead press one rep max"
+    "Overhead press training max"
     ${LIFT_TYPE.PRESS}: Float!
 
-    "Deadlift one rep max"
+    "Deadlift training max"
     ${LIFT_TYPE.DEADLIFT}: Float!
 
-    "Squat one rep max"
+    "Squat training max"
     ${LIFT_TYPE.SQUAT}: Float!
   }
 
@@ -49,8 +49,8 @@ export default gql`
     "User's preferred order of lifts"
     liftOrder: [LiftType!]!
 
-    "User's one rep maxes"
-    oneRepMaxes: OneRepMaxes!
+    "User's trianing maxes"
+    trainingMax: TrainingMax!
 
     "What week of beyond 5/3/1 the user is on"
     week: Int!
@@ -77,7 +77,7 @@ export default gql`
     "Workout id"
     id: ID!
 
-    "Core lifts this workout (generated using user's one rep maxes and current week)"
+    "Core lifts this workout (generated using user's training maxes and current week)"
     coreSets: [Lift!]!
 
     "Did the user do their first set last"
@@ -134,30 +134,30 @@ export default gql`
     user: User
   }
 
-  "A User's one rep maxes"
-  input OneRepMaxesInput {
-    "Bench press one rep max"
+  "A User's training maxes"
+  input TrainingMaxInput {
+    "Bench press training max"
     ${LIFT_TYPE.BENCH}: Float!
 
-    "Overhead press one rep max"
+    "Overhead press training max"
     ${LIFT_TYPE.PRESS}: Float!
 
-    "Deadlift one rep max"
+    "Deadlift training max"
     ${LIFT_TYPE.DEADLIFT}: Float!
 
-    "Squat one rep max"
+    "Squat training max"
     ${LIFT_TYPE.SQUAT}: Float!
   }
 
-  input UpdateUserOneRepMaxesInput {
+  input UpdateUserTrainingMaxesInput {
     "The id of the user being updated"
     id: ID!
 
-    "Updated user oneRepMaxes"
-    oneRepMaxes: OneRepMaxesInput
+    "Updated user TrainingMaxes"
+    trainingMaxes: TrainingMaxesInput
   }
 
-  type UpdateUserOneRepMaxesResponse implements MutationResponse {
+  type UpdateUserTrainingMaxesResponse implements MutationResponse {
     code: String!
     message: String!
     success: Boolean!
@@ -193,7 +193,7 @@ export default gql`
 
   "Possible fields that can be updated on workout"
   input UpdateWorkoutUpdates {
-    "Core lifts this workout (generated using user's one rep maxes and current week)"
+    "Core lifts this workout (generated using user's training maxes and current week)"
     coreSets: [LiftInput!]
 
     "Did the user do their first set last"
@@ -235,10 +235,10 @@ export default gql`
       input: UpdateUserLiftOrderInput!
     ): UpdateUserLiftOrderResponse
 
-    "Updates the user's one rep maxes"
-    updateUserOneRepMaxes(
-      input: UpdateUserOneRepMaxesInput!
-    ): UpdateUserOneRepMaxesResponse
+    "Updates the user's training maxes"
+    updateUserTrainingMaxes(
+      input: UpdateUserTrainingMaxesInput!
+    ): UpdateUserTrainingMaxesResponse
 
     "Updates the user's current workout week"
     updateUserWeek(input: UpdateUserWeekInput!): UpdateUserWeekResponse

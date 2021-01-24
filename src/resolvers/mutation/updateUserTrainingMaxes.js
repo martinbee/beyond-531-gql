@@ -1,14 +1,14 @@
 import { users } from '../../stubData.js';
 
-export default function updateUserOneRepMaxes(parent, args, context, info) {
+export default function updateUserTrainingMaxes(parent, args, context, info) {
   const { input } = args;
-  const { id, oneRepMaxes } = input;
+  const { id, trainingMaxes } = input;
   const userToUpdate = users.find((user) => user.id === id);
 
   if (!userToUpdate) {
     return {
       code: '400',
-      message: "Failed to set user's one rep maxes.",
+      message: "Failed to set user's training maxes.",
       success: false,
       user: null,
     };
@@ -16,12 +16,12 @@ export default function updateUserOneRepMaxes(parent, args, context, info) {
 
   const updatedUser = {
     ...userToUpdate,
-    oneRepMaxes,
+    trainingMaxes,
   };
 
   return {
     code: '200',
-    message: "Successfully set user's one rep maxes!",
+    message: "Successfully set user's training maxes!",
     success: true,
     user: updatedUser,
   };
