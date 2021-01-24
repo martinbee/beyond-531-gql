@@ -8,8 +8,8 @@ GQL layer for a beyond 5/3/1 workout app
 - reorg files [x]
 - look into using schema files instead of .js
 - add mutations that will update user (one rep maxes, week) [x]
-- add mutations that will create workout
-- add mutations that will update workout
+- add mutations that will create workout [x]
+- add mutations that will update workout [x]
 - add db (postgres?)
 - use real data
 - update mutations to update db

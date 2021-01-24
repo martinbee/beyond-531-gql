@@ -49,6 +49,7 @@ const getCoreSets = (currentLiftType, oneRepMaxes, week) => {
   const liftTemplates = weekLiftTemplatesMap[week];
 
   const lifts = liftTemplates.map(({ percentage, reps }) => ({
+    completed: false,
     reps,
     weight: percentage * oneRepMaxes[currentLiftType],
   }));

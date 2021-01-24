@@ -1,17 +1,20 @@
-const userWorkoutsHistory = [
+export const userWorkoutsHistory = [
   {
     active: false,
     id: '1',
     coreSets: [
       {
+        completed: true,
         reps: 5,
         weight: 125,
       },
       {
+        completed: true,
         reps: 5,
         weight: 145,
       },
       {
+        completed: true,
         reps: 7,
         weight: 165,
       },
@@ -20,10 +23,12 @@ const userWorkoutsHistory = [
     didWarmUp: true,
     jokerSets: [
       {
+        completed: true,
         reps: 2,
         weight: 185,
       },
       {
+        completed: true,
         reps: 1,
         weight: 195,
       },
@@ -35,14 +40,17 @@ const userWorkoutsHistory = [
     id: '2',
     coreSets: [
       {
+        completed: true,
         reps: 5,
         weight: 135,
       },
       {
+        completed: true,
         reps: 3,
         weight: 165,
       },
       {
+        completed: true,
         reps: 5,
         weight: 175,
       },
@@ -51,10 +59,12 @@ const userWorkoutsHistory = [
     didWarmUp: false,
     jokerSets: [
       {
+        completed: true,
         reps: 3,
         weight: 185,
       },
       {
+        completed: true,
         reps: 1,
         weight: 195,
       },

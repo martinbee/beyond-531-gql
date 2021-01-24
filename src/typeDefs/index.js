@@ -58,6 +58,9 @@ export default gql`
 
   "A single lift - used in Workout"
   type Lift {
+    "Has this lift been lifted/completed"
+    completed: Boolean!
+
     "Number of reps lifted"
     reps: Int!
 
@@ -176,6 +179,51 @@ export default gql`
     user: User
   }
 
+  "A single lift - used in Workout"
+  input LiftInput {
+    "Has this lift been lifted/completed"
+    completed: Boolean!
+
+    "Number of reps lifted"
+    reps: Int!
+
+    "Weight lifted"
+    weight: Float!
+  }
+
+  "Possible fields that can be updated on workout"
+  input UpdateWorkoutUpdates {
+    "Core lifts this workout (generated using user's one rep maxes and current week)"
+    coreSets: [LiftInput!]
+
+    "Did the user do their first set last"
+    didFirstSetLast: Boolean
+
+    "Did the warm up"
+    didWarmUp: Boolean
+
+    "Heavy lifts added in after the core sets"
+    jokerSets: [LiftInput!]
+
+    "What lift are we doing (bench, press, etc.). Look into enums for this"
+    liftType: LiftType
+  }
+
+  input UpdateWorkoutInput {
+    "The id of the workout being updated"
+    id: ID!
+
+    "Possible fields that can be updated on workout"
+    updates: UpdateWorkoutUpdates!
+  }
+
+  type UpdateWorkoutResponse implements MutationResponse {
+    code: String!
+    message: String!
+    success: Boolean!
+    workout: Workout
+  }
+
   # Think about if we want one update user mutation or these smaller ones
   # these are technically clearer and more secure, but a bit of a pain
   type Mutation {
@@ -194,5 +242,8 @@ export default gql`
 
     "Updates the user's current workout week"
     updateUserWeek(input: UpdateUserWeekInput!): UpdateUserWeekResponse
+
+    "Updates a workout"
+    updateWorkout(input: UpdateWorkoutInput!): UpdateWorkoutResponse
   }
 `;
