@@ -94,7 +94,7 @@ export default gql`
   type Query {
     users: [User]
     user(id: ID): User
-    workouts: [Workout]
+    workouts(isActive: Boolean): [Workout]
     workout(id: ID): Workout
   }
 
@@ -112,6 +112,18 @@ export default gql`
 
     "Whether or not the mutation succeeded"
     success: Boolean!
+  }
+
+  input CompleteWorkoutInput {
+    id: ID!
+  }
+
+  type CompleteWorkoutResponse implements MutationResponse {
+    code: String!
+    errorMessage: String
+    message: String!
+    success: Boolean!
+    workout: Workout
   }
 
   input CreateWorkoutInput {
@@ -217,6 +229,9 @@ export default gql`
   }
 
   type Mutation {
+    "Completes a workout"
+    completeWorkout(input: CompleteWorkoutInput!): CompleteWorkoutResponse
+
     "Creates a workout"
     createWorkout(input: CreateWorkoutInput!): CreateWorkoutResponse
 

@@ -8,7 +8,12 @@ import typeDefs from './typeDefs/index.js';
 connectMongoose();
 seedTestData();
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const cors = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+
+const server = new ApolloServer({ typeDefs, resolvers, cors });
 
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
