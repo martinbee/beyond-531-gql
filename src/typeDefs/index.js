@@ -26,6 +26,9 @@ export default gql`
 
   "A user"
   type User {
+    "User's current active workout"
+    activeWorkout: Workout
+
     "User's current lift"
     currentLiftType: LiftType!
 

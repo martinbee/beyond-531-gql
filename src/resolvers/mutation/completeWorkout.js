@@ -5,10 +5,22 @@ import Workout from '../../data/models/Workout.js';
 const getNewCurrentLift = (lastLiftType, liftOrder) => {
   const lastLiftIndex = liftOrder.indexOf(lastLiftType);
 
-  const restartLiftOrder = lastLiftIndex >= liftOrder.length;
+  const restartLiftOrder = lastLiftIndex === liftOrder.length - 1;
   const nextLiftIndex = restartLiftOrder ? 0 : lastLiftIndex + 1;
 
   return liftOrder[nextLiftIndex];
+};
+
+const getUserWeek = (lastLiftType, liftOrder, week) => {
+  const lastLiftInWeek = liftOrder[liftOrder.length - 1];
+  const wasEndOfWeek = lastLiftType === lastLiftInWeek;
+
+  if (!wasEndOfWeek) return week;
+
+  const shouldRestartWeeks = week === 3;
+  if (shouldRestartWeeks) return 1;
+
+  return week + 1;
 };
 
 // maybe want to batch so they all fail at same time?
@@ -23,13 +35,14 @@ export default async function completeWorkout(parent, args, context, info) {
     }).populate('user');
 
     const { liftType, user } = workout;
-    const { history, id: userId, liftOrder } = user;
+    const { history, id: userId, liftOrder, week } = user;
 
     const updatedUserHistory = [...history, workout];
 
     const userUpdates = {
       currentLiftType: getNewCurrentLift(liftType, liftOrder),
       history: updatedUserHistory,
+      week: getUserWeek(liftType, liftOrder, week),
     };
     await User.findByIdAndUpdate(userId, userUpdates);
 
